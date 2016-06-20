@@ -1,0 +1,9 @@
+c:\users\notepad\documents\visual studio 2010\Projects\laba\FtpClient\FtpClient\bin\Debug\FtpClient.exe
+c:\users\notepad\documents\visual studio 2010\Projects\laba\FtpClient\FtpClient\bin\Debug\FtpClient.pdb
+c:\users\notepad\documents\visual studio 2010\Projects\laba\FtpClient\FtpClient\obj\x86\Debug\FtpClient.exe
+c:\users\notepad\documents\visual studio 2010\Projects\laba\FtpClient\FtpClient\obj\x86\Debug\FtpClient.pdb
+C:\Users\Anastasiya_Kulakova\Desktop\FtpClient\FtpClient\obj\x86\Debug\FtpClient.exe
+C:\Users\Anastasiya_Kulakova\Desktop\FtpClient\FtpClient\obj\x86\Debug\FtpClient.pdb
+C:\Users\Anastasiya_Kulakova\Desktop\FtpClient\FtpClient\bin\Debug\FtpClient.exe
+C:\Users\Anastasiya_Kulakova\Desktop\FtpClient\FtpClient\bin\Debug\FtpClient.pdb
+C:\Users\Anastasiya_Kulakova\Desktop\FtpClient\FtpClient\obj\x86\Debug\FtpClient.csprojResolveAssemblyReference.cache
