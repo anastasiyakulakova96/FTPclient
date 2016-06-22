@@ -1,0 +1,20 @@
+﻿<Project 
+  DefaultTargets="Build" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+
+  <Target
+    Name="Build"
+    Inputs="@(Compile)"
+    Outputs="FtpClient.exe"
+  >
+    <Csc
+      OutputAssembly="FtpClient.exe"
+      Sources="@(Compile)"
+      TargetType="exe"
+    />
+  </Target>
+</Project>
