@@ -23,7 +23,7 @@ namespace FtpClient
                 Console.Clear();
 
               
-                client = new Client(currentAddress, "", "");
+               client = new Client(currentAddress, "", "");
 
                 List<FileDirectoryInfo> list = program.GetFilesAndDirectories(client);
                 Console.WriteLine(client.URI);
@@ -34,23 +34,11 @@ namespace FtpClient
 
                 if (key.Key == ConsoleKey.O)
                 {
-                    Console.WriteLine("\nEnter the directory name:");
-                    String name = Console.ReadLine(); 
-                    if (name.Equals("..."))
-                    {
-                        currentAddress = prevAddress;
-                    }
-                    else
-                    {
-                        prevAddress = client.URI;
-                        currentAddress = client.URI + name + "/";
-                    }
+                    program.EnteDirectory();
                 }
                 else if (key.Key == ConsoleKey.D)
                 {
-                    Console.WriteLine("\nEnter the file name:");
-                    String name = Console.ReadLine();
-                    client.DownloadFile(name, rootDestDir + name);
+                    program.EnterFile();
                 }
                 else if (key.Key == ConsoleKey.E)
                 {
@@ -66,7 +54,30 @@ namespace FtpClient
             Console.WriteLine("Press 'E' to exit");
         }
 
-        
+        public void EnteDirectory()
+        {
+            Client client;
+            client = new Client(currentAddress, "", "");
+            Console.WriteLine("\nEnter the directory name:");
+            String name = Console.ReadLine();
+            if (name.Equals("..."))
+            {
+                currentAddress = prevAddress;
+            }
+            else
+            {
+                prevAddress = client.URI;
+                currentAddress = client.URI + name + "/";
+            }
+        }
+        public void EnterFile()
+        {
+            Client client;
+            client = new Client(currentAddress, "", "");
+            Console.WriteLine("\nEnter the file name:");
+            String name = Console.ReadLine();
+            client.DownloadFile(name, rootDestDir + name);
+        }
 
         public void WriteFiles(List<FileDirectoryInfo> list)
         {
