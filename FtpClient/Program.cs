@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -10,9 +8,9 @@ namespace FtpClient
 {
     class Program
     {
-        static string rootDestDir = "F:/"; 
-        static string rootAddress = "ftp://ftp.ussg.iu.edu/"; 
-        static string currentAddress = "", prevAddress = "";
+        public  static string rootDestDir = "F:/";
+        public static string rootAddress = "ftp://ftp.ussg.iu.edu/";
+        public static string currentAddress = "", prevAddress = "";
 
         static void Main(string[] args)
         {
@@ -31,7 +29,7 @@ namespace FtpClient
                 Console.WriteLine(client.URI);
                 program.WriteFiles(list);
 
-                program.menu();
+                program.ShowMenu();
                 key = Console.ReadKey();
 
                 if (key.Key == ConsoleKey.O)
@@ -61,12 +59,14 @@ namespace FtpClient
             }
         }
 
-        public void menu()
+        public void ShowMenu()
         {
             Console.WriteLine("Press 'O' to open directory");
             Console.WriteLine("Press 'D' to download file");
             Console.WriteLine("Press 'E' to exit");
         }
+
+        
 
         public void WriteFiles(List<FileDirectoryInfo> list)
         {
@@ -161,6 +161,8 @@ namespace FtpClient
 
             return PrintWorkingDirectory();
         }
+
+
 
         public string DeleteFile(string fileName)
         {
@@ -382,10 +384,10 @@ namespace FtpClient
 
     public class FileDirectoryInfo
     {
-        string fileSize;
-        string type;
-        string name;
-        string date;
+        public string fileSize;
+        public string type;
+        public string name;
+        public string date;
         public string adress;
 
         public string FileSize
