@@ -166,7 +166,7 @@ namespace FtpClient
 
         public string DeleteFile(string fileName)
         {
-            var request = createRequest(combine(uri, fileName), WebRequestMethods.Ftp.DeleteFile);
+            FtpWebRequest request = createRequest(combine(uri, fileName), WebRequestMethods.Ftp.DeleteFile);
 
             return getStatusDescription(request);
         }
@@ -174,16 +174,16 @@ namespace FtpClient
         public string DownloadFile(string source, string dest)
         {
             Console.WriteLine("path: " + combine(uri, source));
-            var request = createRequest(combine(uri, source), WebRequestMethods.Ftp.DownloadFile);
+            FtpWebRequest request = createRequest(combine(uri, source), WebRequestMethods.Ftp.DownloadFile);
 
             byte[] buffer = new byte[bufferSize];
 
-            using (var response = (FtpWebResponse)request.GetResponse())
-            {
-                using (var stream = response.GetResponseStream())
-                {
-                    using (var fs = new FileStream(dest, FileMode.OpenOrCreate))
-                    {
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+            Stream stream = response.GetResponseStream();
+
+            FileStream fs = new FileStream(dest, FileMode.OpenOrCreate);
+                    
                         int readCount = stream.Read(buffer, 0, bufferSize);
 
                         while (readCount > 0)
@@ -194,103 +194,103 @@ namespace FtpClient
                             fs.Write(buffer, 0, readCount);
                             readCount = stream.Read(buffer, 0, bufferSize);
                         }
-                    }
-                }
+                    
+                
 
                 return response.StatusDescription;
-            }
+            
         }
 
         public DateTime GetDateTimestamp(string fileName)
         {
-            var request = createRequest(combine(uri, fileName), WebRequestMethods.Ftp.GetDateTimestamp);
+            FtpWebRequest request = createRequest(combine(uri, fileName), WebRequestMethods.Ftp.GetDateTimestamp);
 
-            using (var response = (FtpWebResponse)request.GetResponse())
-            {
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            
                 return response.LastModified;
-            }
+            
         }
 
         public long GetFileSize(string fileName)
         {
-            var request = createRequest(combine(uri, fileName), WebRequestMethods.Ftp.GetFileSize);
+            FtpWebRequest request = createRequest(combine(uri, fileName), WebRequestMethods.Ftp.GetFileSize);
 
-            using (var response = (FtpWebResponse)request.GetResponse())
-            {
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            
                 return response.ContentLength;
-            }
+            
         }
 
         public string[] ListDirectory()
         {
-            var list = new List<string>();
+            List<string> list = new List<string>();
 
-            var request = createRequest(WebRequestMethods.Ftp.ListDirectory);
+            FtpWebRequest request = createRequest(WebRequestMethods.Ftp.ListDirectory);
 
-            using (var response = (FtpWebResponse)request.GetResponse())
-            {
-                using (var stream = response.GetResponseStream())
-                {
-                    using (var reader = new StreamReader(stream, true))
-                    {
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+            Stream stream = response.GetResponseStream();
+
+            StreamReader reader = new StreamReader(stream, true);
+                    
                         while (!reader.EndOfStream)
                         {
                             list.Add(reader.ReadLine());
                         }
-                    }
-                }
-            }
+                    
+                
+            
 
             return list.ToArray();
         }
 
         public string[] ListDirectoryDetails()
         {
-            var list = new List<string>();
+            List<string> list = new List<string>();
 
-            var request = createRequest(WebRequestMethods.Ftp.ListDirectoryDetails);
+            FtpWebRequest request = createRequest(WebRequestMethods.Ftp.ListDirectoryDetails);
 
-            using (var response = (FtpWebResponse)request.GetResponse())
-            {
-                using (var stream = response.GetResponseStream())
-                {
-                    using (var reader = new StreamReader(stream, true))
-                    {
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+            Stream stream = response.GetResponseStream();
+
+            StreamReader reader = new StreamReader(stream, true);
+                    
                         while (!reader.EndOfStream)
                         {
                             list.Add(reader.ReadLine());
                         }
-                    }
-                }
-            }
+                    
+                
+            
 
             return list.ToArray();
         }
 
         public string MakeDirectory(string directoryName)
         {
-            var request = createRequest(combine(uri, directoryName), WebRequestMethods.Ftp.MakeDirectory);
+            FtpWebRequest request = createRequest(combine(uri, directoryName), WebRequestMethods.Ftp.MakeDirectory);
 
             return getStatusDescription(request);
         }
 
         public string PrintWorkingDirectory()
         {
-            var request = createRequest(WebRequestMethods.Ftp.PrintWorkingDirectory);
+            FtpWebRequest request = createRequest(WebRequestMethods.Ftp.PrintWorkingDirectory);
 
             return getStatusDescription(request);
         }
 
         public string RemoveDirectory(string directoryName)
         {
-            var request = createRequest(combine(uri, directoryName), WebRequestMethods.Ftp.RemoveDirectory);
+            FtpWebRequest request = createRequest(combine(uri, directoryName), WebRequestMethods.Ftp.RemoveDirectory);
 
             return getStatusDescription(request);
         }
 
         public string Rename(string currentName, string newName)
         {
-            var request = createRequest(combine(uri, currentName), WebRequestMethods.Ftp.Rename);
+            FtpWebRequest request = createRequest(combine(uri, currentName), WebRequestMethods.Ftp.Rename);
 
             request.RenameTo = newName;
 
@@ -299,12 +299,12 @@ namespace FtpClient
 
         public string UploadFile(string source, string destination)
         {
-            var request = createRequest(combine(uri, destination), WebRequestMethods.Ftp.UploadFile);
+            FtpWebRequest request = createRequest(combine(uri, destination), WebRequestMethods.Ftp.UploadFile);
 
-            using (var stream = request.GetRequestStream())
-            {
-                using (var fileStream = System.IO.File.Open(source, FileMode.Open))
-                {
+            Stream stream = request.GetRequestStream();
+            
+                FileStream fileStream = System.IO.File.Open(source, FileMode.Open);
+               
                     int num;
 
                     byte[] buffer = new byte[bufferSize];
@@ -316,20 +316,20 @@ namespace FtpClient
 
                         stream.Write(buffer, 0, num);
                     }
-                }
-            }
+                
+            
 
             return getStatusDescription(request);
         }
 
         public string UploadFileWithUniqueName(string source)
         {
-            var request = createRequest(WebRequestMethods.Ftp.UploadFileWithUniqueName);
+            FtpWebRequest request = createRequest(WebRequestMethods.Ftp.UploadFileWithUniqueName);
 
-            using (var stream = request.GetRequestStream())
-            {
-                using (var fileStream = System.IO.File.Open(source, FileMode.Open))
-                {
+            Stream stream = request.GetRequestStream();
+            
+                FileStream fileStream = System.IO.File.Open(source, FileMode.Open);
+                
                     int num;
 
                     byte[] buffer = new byte[bufferSize];
@@ -341,13 +341,13 @@ namespace FtpClient
 
                         stream.Write(buffer, 0, num);
                     }
-                }
-            }
 
-            using (var response = (FtpWebResponse)request.GetResponse())
-            {
+
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            
                 return Path.GetFileName(response.ResponseUri.ToString());
-            }
+            
         }
 
         private FtpWebRequest createRequest(string method)
@@ -357,7 +357,7 @@ namespace FtpClient
 
         private FtpWebRequest createRequest(string uri, string method)
         {
-            var r = (FtpWebRequest)WebRequest.Create(uri);
+            FtpWebRequest r = (FtpWebRequest)WebRequest.Create(uri);
 
             r.Credentials = new NetworkCredential(userName, password);
             r.Method = method;
@@ -370,10 +370,10 @@ namespace FtpClient
 
         private string getStatusDescription(FtpWebRequest request)
         {
-            using (var response = (FtpWebResponse)request.GetResponse())
-            {
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            
                 return response.StatusDescription;
-            }
+            
         }
 
         private string combine(string path1, string path2)
